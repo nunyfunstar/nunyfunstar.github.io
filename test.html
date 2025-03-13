@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuny Net</title>
+    <style>
+        @keyframes twinkle {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.6; }
+        }
+
+        @keyframes moveComet {
+            0% { transform: translateX(100vw) translateY(-50vh) scale(1); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(-10vw) translateY(50vh) scale(0); opacity: 0; }
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(-10px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.6; }
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: radial-gradient(circle, #2a0d45, #1a0328, #10011a);
+            color: #e0b3ff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.8em;
+            text-shadow: 3px 3px 10px rgba(255, 200, 255, 0.8);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            width: 230px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 2px solid #cda3ff;
+            box-shadow: 0 4px 10px rgba(205, 163, 255, 0.5);
+        }
+        .option:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(245, 176, 255, 0.8);
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .option h2 {
+            font-size: 1.6em;
+            color: #f0c6ff;
+        }
+
+        /* Starry background */
+        .stars, .comets, .stardust, .special-stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        .star.large {
+            width: 7px;
+            height: 7px;
+            opacity: 1;
+        }
+
+        .comet {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px white;
+            opacity: 0;
+            animation: moveComet 5s linear infinite;
+        }
+
+        .stardust {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: drift 4s infinite alternate ease-in-out;
+        }
+
+        /* Five-pointed special stars */
+        .special-star {
+            position: absolute;
+            font-size: 30px;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0.9;
+            animation: twinkle 4s infinite alternate;
+        }
+        
+        .special-star:nth-child(2) { color: #ffd700; } /* Gold */
+        .special-star:nth-child(3) { color: #ffefad; } /* Soft Yellow */
+        .special-star:nth-child(4) { color: #fffacd; } /* Pale Star */
+        .special-star:nth-child(5) { color: #ffffe0; } /* Light Yellow */
+
+    </style>
+</head>
+<body>
+
+    <h1>Hello.</h1>
+    <h2>Welcome to the Nuny Net</h2>
+    <h3>~Choose your path~</h3>
+
+    <div class="container">
+        <div class="option" onclick="selectCategory('pokemon')">
+            <img src="https://example.com/pokemon-placeholder.jpg" alt="Cards">
+            <h2>Pokémon</h2>
+        </div>
+        <div class="option" onclick="selectCategory('mtg')">
+            <img src="https://example.com/mtg-placeholder.jpg" alt="Cards">
+            <h2>Magic: The Gathering</h2>
+        </div>
+    </div>
+
+    <!-- Starry background -->
+    <div class="stars" id="stars"></div>
+    <div class="comets" id="comets"></div>
+    <div class="stardust" id="stardust"></div>
+    <div class="special-stars" id="special-stars"></div>
+
+    <script>
+        function selectCategory(category) {
+            alert("You chose " + category + "!");
+        }
+
+        function createStars() {
+            const starContainer = document.getElementById('stars');
+            for (let i = 0; i < 60; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                if (Math.random() > 0.85) {
+                    star.classList.add('large');
+                }
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                starContainer.appendChild(star);
+            }
+        }
+
+        function createComets() {
+            const cometContainer = document.getElementById('comets');
+            for (let i = 0; i < 5; i++) {
+                let comet = document.createElement('div');
+                comet.classList.add('comet');
+                comet.style.left = Math.random() * 100 + 'vw';
+                comet.style.top = Math.random() * 50 + 'vh';
+                comet.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                comet.style.animationDelay = Math.random() * 5 + 's';
+                cometContainer.appendChild(comet);
+            }
+        }
+
+        function createSpecialStars() {
+            const specialContainer = document.getElementById('special-stars');
+            const starPositions = [[20, 10], [40, 30], [60, 50], [50, 20], [80, 60]];
+            for (let i = 0; i < 5; i++) {
+                let star = document.createElement('div');
+                star.classList.add('special-star');
+                star.innerHTML = '★';
+                star.style.left = starPositions[i][0] + 'vw';
+                star.style.top = starPositions[i][1] + 'vh';
+                specialContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+        createComets();
+        createSpecialStars();
+    </script>
+
+</body>
+</html>
+s
